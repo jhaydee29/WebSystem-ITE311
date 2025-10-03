@@ -24,12 +24,41 @@
         <li class="nav-item">
           <a class="nav-link" href="<?= site_url('/contact') ?>">Contact</a>
         </li>
+
+        <?php if (!session()->get('isLoggedIn')): ?>
+          <!-- Show auth buttons when not logged in -->
+          <li class="nav-item ms-3">
+            <a class="btn btn-outline-primary me-2" href="<?= site_url('/register') ?>">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-primary" href="<?= site_url('/login') ?>">Login</a>
+          </li>
+        <?php else: ?>
+          <!-- Show user menu when logged in -->
+          <li class="nav-item ms-3">
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                <i class="fas fa-user me-2"></i>Welcome, <?= session()->get('name') ?>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<?= site_url('/dashboard') ?>"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+                <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog me-2"></i>Profile</a></li>
+                <?php if (session()->get('role') === 'admin'): ?>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#"><i class="fas fa-crown me-2"></i>Admin Panel</a></li>
+                <?php endif; ?>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="<?= site_url('/logout') ?>"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+              </ul>
+            </div>
+          </li>
+        <?php endif; ?>
       </ul>
     </div>
   </div>
 </nav>
 
-<div class="container mt-5 text-center">
+<div class="container mt-4">
     <?= $this->renderSection('content') ?>
 </div>
 

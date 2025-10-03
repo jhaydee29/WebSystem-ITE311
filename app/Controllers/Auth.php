@@ -70,19 +70,24 @@ class Auth extends BaseController
             if (!$this->validate($rules)) {
                 $data['validation'] = $this->validator;
             } else {
+                // Validation passed - now check database
                 $db = \Config\Database::connect();
                 $user = $db->table('users')->where('email', $this->request->getPost('email'))->get()->getRowArray();
 
                 if ($user) {
                     if (password_verify($this->request->getPost('password'), $user['password'])) {
+                        // Store user data including role in session
                         $sessionData = [
                             'id'        => $user['id'],
                             'name'      => $user['name'],
                             'email'     => $user['email'],
+                            'role'      => $user['role'],
                             'isLoggedIn'=> true,
                         ];
+
                         session()->set($sessionData);
 
+                        // Redirect all users to unified dashboard
                         return redirect()->to('/dashboard');
                     } else {
                         session()->setFlashdata('error', 'Wrong password.');
@@ -111,6 +116,70 @@ class Auth extends BaseController
             return redirect()->to('/login');
         }
 
-        return view('dashboard');
+        $userRole = session()->get('role');
+        $userId = session()->get('id');
+        $db = \Config\Database::connect();
+
+        // Debug: Check what's in session
+        // $sessionData = session()->get();
+        // log_message('debug', 'Dashboard Session Data: ' . json_encode($sessionData));
+
+        // Initialize dashboard data
+        $dashboardData = [
+            'user' => [
+                'name' => session()->get('name'),
+                'role' => $userRole,
+                'email' => session()->get('email')
+            ]
+        ];
+
+        // Fetch role-specific data
+        switch ($userRole) {
+            case 'admin':
+                $dashboardData['stats'] = [
+                    'total_users' => $db->table('users')->countAll(),
+                    'total_courses' => $db->table('courses')->countAll(),
+                    'recent_registrations' => $db->table('users')
+                        ->where('created_at >=', date('Y-m-d H:i:s', strtotime('-7 days')))
+                        ->countAllResults(),
+                    'active_courses' => $db->table('courses')->countAll()
+                ];
+                break;
+
+            case 'teacher':
+                $dashboardData['stats'] = [
+                    'my_courses' => $db->table('courses')
+                        ->where('instructor_id', $userId)
+                        ->countAllResults(),
+                    'total_students' => $db->table('enrollments')
+                        ->join('courses', 'enrollments.course_id = courses.id')
+                        ->where('courses.instructor_id', $userId)
+                        ->countAllResults(),
+                    'pending_submissions' => 0
+                ];
+                break;
+
+            case 'student':
+            default:
+                $dashboardData['stats'] = [
+                    'enrolled_courses' => $db->table('enrollments')
+                        ->where('user_id', $userId)
+                        ->countAllResults(),
+                    'completed_courses' => 0,
+                    'total_submissions' => $db->table('submissions')
+                        ->where('user_id', $userId)
+                        ->countAllResults(),
+                    'average_grade' => $db->table('submissions')
+                        ->selectAvg('score')
+                        ->where('user_id', $userId)
+                        ->where('score IS NOT NULL')
+                        ->get()
+                        ->getRow()
+                        ->score ?? 0
+                ];
+                break;
+        }
+
+        return view('dashboard', $dashboardData);
     }
 }

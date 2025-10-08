@@ -1,0 +1,16 @@
+ERROR - 2025-10-08 15:55:37 --> mysqli_sql_exception: Table 'enrollments' already exists in D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\system\Database\MySQLi\Connection.php(327): mysqli->query('CREATE TABLE `e...', 0)
+#1 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('CREATE TABLE `e...')
+#2 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('CREATE TABLE `e...')
+#3 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\system\Database\Forge.php(570): CodeIgniter\Database\BaseConnection->query('CREATE TABLE `e...')
+#4 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\app\Database\Migrations\2025-10-08-155030_CreateEnrollmentsTable.php(37): CodeIgniter\Database\Forge->createTable('enrollments')
+#5 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\system\Database\MigrationRunner.php(876): App\Database\Migrations\CreateEnrollmentsTable->up()
+#6 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\system\Commands\Database\Migrate.php(85): CodeIgniter\Database\MigrationRunner->latest(NULL)
+#8 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\Migrate->run(Array)
+#9 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\system\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate', Array)
+#10 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\system\Boot.php(388): CodeIgniter\CLI\Console->run()
+#11 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\system\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+#12 D:\Users\User\Desktop\xampp\htdocs\ITE311-Marañan\spark(89): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+#13 {main}

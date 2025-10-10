@@ -2,6 +2,9 @@
 
 namespace App\Controllers;
 
+use App\Models\EnrollmentModel;
+use App\Models\CourseModel;
+
 class Auth extends BaseController
 {
     public function register()
@@ -33,14 +36,14 @@ class Auth extends BaseController
                 try {
                     // Check if email already exists
                     $existingUser = $db->table('users')->where('email', $newData['email'])->get()->getRow();
-                    
+
                     if ($existingUser) {
                         session()->setFlashdata('error', 'Email already exists.');
                         return redirect()->to('/register');
                     }
 
                     $result = $db->table('users')->insert($newData);
-                    
+
                     if ($result) {
                         session()->setFlashdata('success', 'Registration successful!');
                         return redirect()->to('/login');
@@ -161,6 +164,24 @@ class Auth extends BaseController
 
             case 'student':
             default:
+                // Initialize models
+                $enrollmentModel = new EnrollmentModel();
+                $courseModel = new CourseModel();
+
+                // Get user's enrolled courses
+                $enrolledCourses = $enrollmentModel->getUserEnrollments($userId);
+
+                // Get all available courses
+                $allCourses = $courseModel->getAllCourses();
+
+                // Get enrolled course IDs for easy checking
+                $enrolledCourseIds = array_column($enrolledCourses, 'course_id');
+
+                // Filter available courses (not enrolled)
+                $availableCourses = array_filter($allCourses, function($course) use ($enrolledCourseIds) {
+                    return !in_array($course['id'], $enrolledCourseIds);
+                });
+
                 $dashboardData['stats'] = [
                     'enrolled_courses' => $db->table('enrollments')
                         ->where('user_id', $userId)
@@ -177,6 +198,11 @@ class Auth extends BaseController
                         ->getRow()
                         ->score ?? 0
                 ];
+
+                // Add enrollment data for the dashboard view
+                $dashboardData['enrolledCourses'] = $enrolledCourses;
+                $dashboardData['availableCourses'] = array_values($availableCourses);
+
                 break;
         }
 

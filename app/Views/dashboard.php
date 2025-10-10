@@ -169,6 +169,98 @@
                 </div>
             </div>
         </div>
+
+        <!-- Enrolled Courses Section -->
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-graduation-cap me-2"></i>My Enrolled Courses
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <?php if (!empty($enrolledCourses)): ?>
+                        <div class="row">
+                            <?php foreach ($enrolledCourses as $course): ?>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card border-success h-100">
+                                        <div class="card-body">
+                                            <h6 class="card-title text-success">
+                                                <i class="fas fa-check-circle me-1"></i>
+                                                <?php echo htmlspecialchars($course['course_name']); ?>
+                                            </h6>
+                                            <p class="card-text text-muted small">
+                                                <?php echo htmlspecialchars(substr($course['description'], 0, 100) . (strlen($course['description']) > 100 ? '...' : '')); ?>
+                                            </p>
+                                            <small class="text-muted">
+                                                <i class="fas fa-calendar me-1"></i>
+                                                Enrolled: <?php echo date('M d, Y', strtotime($course['enrollment_date'])); ?>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="text-center py-4">
+                            <i class="fas fa-info-circle text-muted fa-3x mb-3"></i>
+                            <h5 class="text-muted">No Enrolled Courses</h5>
+                            <p class="text-muted">You haven't enrolled in any courses yet. Browse available courses below to get started!</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available Courses Section -->
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-plus-circle me-2"></i>Available Courses
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <?php if (!empty($availableCourses)): ?>
+                        <div class="row">
+                            <?php foreach ($availableCourses as $course): ?>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="card-title">
+                                                <?php echo htmlspecialchars($course['title']); ?>
+                                            </h6>
+                                            <p class="card-text text-muted small">
+                                                <?php echo htmlspecialchars(substr($course['description'], 0, 100) . (strlen($course['description']) > 100 ? '...' : '')); ?>
+                                            </p>
+                                            <?php if (!empty($course['instructor_name'])): ?>
+                                                <small class="text-muted">
+                                                    <i class="fas fa-chalkboard-teacher me-1"></i>
+                                                    <?php echo htmlspecialchars($course['instructor_name']); ?>
+                                                </small>
+                                            <?php endif; ?>
+                                            <div class="mt-3">
+                                                <button class="btn btn-primary btn-sm enroll-btn"
+                                                        data-course-id="<?php echo $course['id']; ?>">
+                                                    <i class="fas fa-plus me-1"></i>Enroll Now
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="text-center py-4">
+                            <i class="fas fa-trophy text-success fa-3x mb-3"></i>
+                            <h5 class="text-success">All Courses Enrolled!</h5>
+                            <p class="text-muted">Congratulations! You're enrolled in all available courses.</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-6">
             <div class="card mb-3">
                 <div class="card-body">
@@ -197,4 +289,81 @@
     <?php endif; ?>
     <?php $this->endSection() ?>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const enrollButtons = document.querySelectorAll('.enroll-btn');
+
+    enrollButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const courseId = this.getAttribute('data-course-id');
+            const originalText = this.innerHTML;
+
+            // Show loading state
+            this.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Enrolling...';
+            this.disabled = true;
+
+            // Make AJAX request to enroll
+            fetch('<?php echo base_url('course/enroll'); ?>', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: 'course_id=' + courseId
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update button to show success
+                    this.className = 'btn btn-success btn-sm';
+                    this.innerHTML = '<i class="fas fa-check me-1"></i>Enrolled';
+                    this.disabled = true;
+
+                    // Show success message
+                    showAlert('Successfully enrolled in the course!', 'success');
+
+                    // Reload page after 2 seconds to show updated data
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    // Show error message
+                    showAlert(data.message, 'danger');
+                    // Reset button
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showAlert('An error occurred while enrolling. Please try again.', 'danger');
+                // Reset button
+                this.innerHTML = originalText;
+                this.disabled = false;
+            });
+        });
+    });
+
+    function showAlert(message, type) {
+        const alertHtml = `
+            <div class="alert alert-${type} alert-dismissible fade show position-fixed" style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', alertHtml);
+
+        // Auto-dismiss after 5 seconds
+        setTimeout(() => {
+            const alert = document.querySelector('.alert-dismissible');
+            if (alert) {
+                alert.remove();
+            }
+        }, 5000);
+    }
+});
+</script>
+
 <?= $this->endSection() ?>

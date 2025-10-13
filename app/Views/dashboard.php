@@ -43,7 +43,7 @@
                             <i class="fas fa-graduation-cap me-2"></i>Learning
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-book me-2"></i>My Courses</a></li>
+                            <li><a class="dropdown-item" href="<?php echo base_url('index.php/courses'); ?>"><i class="fas fa-book me-2"></i>My Courses</a></li>
                             <li><a class="dropdown-item" href="#"><i class="fas fa-chart-line me-2"></i>Grades</a></li>
                             <li><a class="dropdown-item" href="#"><i class="fas fa-tasks me-2"></i>Assignments</a></li>
                             <li><hr class="dropdown-divider"></li>
@@ -308,9 +308,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-Requested-With': 'XMLHttpRequest'
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': '<?php echo csrf_hash(); ?>'
                 },
-                body: 'course_id=' + courseId
+                body: 'course_id=' + courseId + '&<?php echo csrf_token(); ?>=' + '<?php echo csrf_hash(); ?>'
             })
             .then(response => response.json())
             .then(data => {

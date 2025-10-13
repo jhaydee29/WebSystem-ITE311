@@ -65,6 +65,17 @@ class Course extends BaseController
             ], 400);
         }
 
+        // Validate course exists
+        $courseModel = new CourseModel();
+        $course = $courseModel->find($courseId);
+
+        if (!$course) {
+            return $this->respond([
+                'success' => false,
+                'message' => 'Course not found'
+            ], 404);
+        }
+
         $userId = session()->get('id');
 
         // Load the EnrollmentModel

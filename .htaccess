@@ -1,5 +1,18 @@
-# Disabled to prevent server errors
-# RewriteEngine On
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteCond %{REQUEST_FILENAME} !-d
-# RewriteRule ^(.*)$ public/$1 [L]
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Redirect uppercase Ñ to lowercase ñ
+RewriteRule ^ITE311-MARA%C3%91AN/(.*)$ /ITE311-Mara%C3%B1an/$1 [R=301,L]
+
+RewriteBase /ITE311-Mara%C3%B1an/
+
+# Block direct access to public folder and index.php
+RewriteRule ^public/ - [F,L]
+RewriteRule ^public/index\.php - [F,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ public/$1 [QSA,L]
+
+RewriteRule ^$ public/index.php [L]
+</IfModule>

@@ -100,7 +100,10 @@ class Course extends BaseController
         if ($enrollmentModel->enrollUser($enrollmentData)) {
             return $this->respond([
                 'success' => true,
-                'message' => 'Successfully enrolled in the course'
+                'message' => 'Successfully enrolled in the course',
+                'course' => $course,
+                'enrollment' => $enrollmentData,
+                'csrf' => csrf_hash()
             ], 200);
         } else {
             return $this->respond([

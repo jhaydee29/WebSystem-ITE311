@@ -5,7 +5,10 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\CourseModel;
 use App\Models\EnrollmentModel;
+<<<<<<< HEAD
 use App\Models\UserModel;
+=======
+>>>>>>> 4ea0f464c41604ac8b9ef56ccd448fdc7b56931e
 use CodeIgniter\API\ResponseTrait;
 
 class Course extends BaseController
@@ -113,6 +116,7 @@ class Course extends BaseController
             ], 500);
         }
     }
+<<<<<<< HEAD
 
     /**
      * Display course details
@@ -174,4 +178,6 @@ class Course extends BaseController
         
         return view('courses/view', $data);
     }
+=======
+>>>>>>> 4ea0f464c41604ac8b9ef56ccd448fdc7b56931e
 }

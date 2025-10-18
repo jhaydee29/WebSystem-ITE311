@@ -90,8 +90,16 @@ class Auth extends BaseController
 
                         session()->set($sessionData);
 
-                        // Redirect all users to unified dashboard
-                        return redirect()->to('/dashboard');
+                        // Redirect based on user role
+                        switch ($user['role']) {
+                            case 'admin':
+                                return redirect()->to('/admin/dashboard');
+                            case 'teacher':
+                                return redirect()->to('/teacher/dashboard');
+                            case 'student':
+                            default:
+                                return redirect()->to('/announcements');
+                        }
                     } else {
                         session()->setFlashdata('error', 'Wrong password.');
                         return redirect()->to('/login');

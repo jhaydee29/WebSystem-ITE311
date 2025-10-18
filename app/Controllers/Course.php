@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\CourseModel;
 use App\Models\EnrollmentModel;
+use App\Models\UserModel;
 use CodeIgniter\API\ResponseTrait;
 
 class Course extends BaseController
@@ -111,5 +112,66 @@ class Course extends BaseController
                 'message' => 'Failed to enroll in the course'
             ], 500);
         }
+    }
+
+    /**
+     * Display course details
+     *
+     * @param int $id Course ID
+     * @return mixed
+     */
+    public function view($id = null)
+    {
+        // Check if user is logged in
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/login');
+        }
+
+        $courseModel = new CourseModel();
+        $enrollmentModel = new EnrollmentModel();
+        $userModel = new UserModel();
+        
+        // Get course details
+        $course = $courseModel->getCourse($id);
+        
+        if (!$course) {
+            return redirect()->to('/courses')->with('error', 'Course not found');
+        }
+        
+        // Check if current user is enrolled
+        $isEnrolled = false;
+        $enrollment = null;
+        
+        if (session()->has('id')) {
+            $userId = session()->get('id');
+            $isEnrolled = $enrollmentModel->isAlreadyEnrolled($userId, $id);
+            if ($isEnrolled) {
+                $enrollment = $enrollmentModel->where('user_id', $userId)
+                                            ->where('course_id', $id)
+                                            ->first();
+            }
+        }
+        
+        // Get instructor details
+        $instructor = $userModel->find($course['instructor_id']);
+        
+        // Get enrolled students count
+        $enrolledStudents = $enrollmentModel->where('course_id', $id)
+                                          ->countAllResults();
+        
+        $data = [
+            'course' => $course,
+            'instructor' => $instructor,
+            'isEnrolled' => $isEnrolled,
+            'enrollment' => $enrollment,
+            'enrolledStudents' => $enrolledStudents,
+            'user' => [
+                'name' => session()->get('name'),
+                'role' => session()->get('role'),
+                'id' => session()->get('id')
+            ]
+        ];
+        
+        return view('courses/view', $data);
     }
 }

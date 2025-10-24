@@ -8,7 +8,6 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-<<<<<<< HEAD
   <div class="container">
     <a class="navbar-brand" href="<?= site_url('/') ?>">
       <i class="fas fa-graduation-cap me-2"></i>ITE311-MARAÑAN
@@ -18,15 +17,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-=======
-  <div class="container position-relative">
-    <a class="navbar-brand position-absolute start-50 translate-middle-x" href="#">ITE311-MARAÑAN</a>
-    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
->>>>>>> origin/recovered-master
         <li class="nav-item">
           <a class="nav-link" href="<?= site_url('/') ?>">Home</a>
         </li>
@@ -36,7 +26,6 @@
         <li class="nav-item">
           <a class="nav-link" href="<?= site_url('/contact') ?>">Contact</a>
         </li>
-<<<<<<< HEAD
         <?php if (session()->get('isLoggedIn')): ?>
         <li class="nav-item">
           <a class="nav-link" href="<?= site_url('/courses') ?>"><i class="fas fa-book me-1"></i>Courses</a>
@@ -45,8 +34,6 @@
           <a class="nav-link" href="<?= site_url('/announcements') ?>"><i class="fas fa-bullhorn me-1"></i>Announcements</a>
         </li>
         <?php endif; ?>
-=======
->>>>>>> origin/recovered-master
 
         <?php if (!session()->get('isLoggedIn')): ?>
           <!-- Show auth buttons when not logged in -->

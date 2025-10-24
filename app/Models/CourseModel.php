@@ -7,10 +7,6 @@ class CourseModel extends Model
 {
     protected $table = 'courses';
     protected $primaryKey = 'id';
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> origin/recovered-master
     protected $allowedFields = [
         'title', 
         'description', 
@@ -52,13 +48,6 @@ class CourseModel extends Model
             'is_natural_no_zero' => 'Please select a valid instructor'
         ]
     ];
-<<<<<<< HEAD
-=======
-=======
-    protected $allowedFields = ['title', 'description', 'instructor_id', 'created_at', 'updated_at'];
-    protected $useTimestamps = true;
->>>>>>> 4ea0f464c41604ac8b9ef56ccd448fdc7b56931e
->>>>>>> origin/recovered-master
 
     /**
      * Get all available courses with instructor names
@@ -98,10 +87,6 @@ class CourseModel extends Model
                     ->groupBy('courses.id')
                     ->findAll();
     }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> origin/recovered-master
     
     /**
      * Get courses by instructor
@@ -191,9 +176,4 @@ class CourseModel extends Model
         
         return $builder->findAll();
     }
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 4ea0f464c41604ac8b9ef56ccd448fdc7b56931e
->>>>>>> origin/recovered-master
 }

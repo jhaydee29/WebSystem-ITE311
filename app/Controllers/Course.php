@@ -5,8 +5,15 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\CourseModel;
 use App\Models\EnrollmentModel;
+<<<<<<< HEAD
 use App\Models\UserModel;
 use App\Models\MaterialModel;
+=======
+<<<<<<< HEAD
+use App\Models\UserModel;
+=======
+>>>>>>> 4ea0f464c41604ac8b9ef56ccd448fdc7b56931e
+>>>>>>> origin/recovered-master
 use CodeIgniter\API\ResponseTrait;
 
 class Course extends BaseController
@@ -114,9 +121,16 @@ class Course extends BaseController
             ], 500);
         }
     }
+<<<<<<< HEAD
 
     /**
      * Display course details with materials - STEP 6 IMPLEMENTATION
+=======
+<<<<<<< HEAD
+
+    /**
+     * Display course details
+>>>>>>> origin/recovered-master
      *
      * @param int $id Course ID
      * @return mixed
@@ -131,7 +145,10 @@ class Course extends BaseController
         $courseModel = new CourseModel();
         $enrollmentModel = new EnrollmentModel();
         $userModel = new UserModel();
+<<<<<<< HEAD
         $materialModel = new MaterialModel();
+=======
+>>>>>>> origin/recovered-master
         
         // Get course details
         $course = $courseModel->getCourse($id);
@@ -161,6 +178,7 @@ class Course extends BaseController
         $enrolledStudents = $enrollmentModel->where('course_id', $id)
                                           ->countAllResults();
         
+<<<<<<< HEAD
         // STEP 6: Fetch materials for the course
         $materials = $materialModel->getCourseMaterials($id);
         
@@ -171,14 +189,19 @@ class Course extends BaseController
             $canUploadMaterials = true;
         }
         
+=======
+>>>>>>> origin/recovered-master
         $data = [
             'course' => $course,
             'instructor' => $instructor,
             'isEnrolled' => $isEnrolled,
             'enrollment' => $enrollment,
             'enrolledStudents' => $enrolledStudents,
+<<<<<<< HEAD
             'materials' => $materials,
             'canUploadMaterials' => $canUploadMaterials,
+=======
+>>>>>>> origin/recovered-master
             'user' => [
                 'name' => session()->get('name'),
                 'role' => session()->get('role'),
@@ -188,4 +211,9 @@ class Course extends BaseController
         
         return view('courses/view', $data);
     }
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 4ea0f464c41604ac8b9ef56ccd448fdc7b56931e
+>>>>>>> origin/recovered-master
 }

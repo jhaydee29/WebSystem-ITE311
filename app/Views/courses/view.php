@@ -39,6 +39,7 @@
                                 <i class="fas fa-users me-1"></i> 
                                 <?= $enrolledStudents ?> enrolled
                             </span>
+<<<<<<< HEAD
                             <?php if ($user['role'] === 'student'): ?>
                                 <?php if ($isEnrolled): ?>
                                     <div class="mt-2">
@@ -66,6 +67,24 @@
                                     <span class="badge bg-warning">
                                         <i class="fas fa-crown me-1"></i> Admin Access
                                     </span>
+=======
+                            <?php if ($isEnrolled): ?>
+                                <div class="mt-2">
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check-circle me-1"></i> Enrolled
+                                    </span>
+                                    <?php if ($enrollment && isset($enrollment['enrollment_date'])): ?>
+                                        <div class="text-muted small mt-1">
+                                            Since <?= date('M d, Y', strtotime($enrollment['enrollment_date'])) ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            <?php else: ?>
+                                <div class="mt-2">
+                                    <button class="btn btn-primary enroll-btn" data-course-id="<?= $course['id'] ?>">
+                                        <i class="fas fa-plus me-1"></i> Enroll Now
+                                    </button>
+>>>>>>> origin/recovered-master
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -81,6 +100,34 @@
                                     <?= nl2br(esc($course['description'])) ?>
                                 </div>
                             </div>
+<<<<<<< HEAD
+=======
+                            
+                            <?php if (!empty($course['learning_outcomes'])): ?>
+                                <div class="card mb-4">
+                                    <div class="card-header bg-light">
+                                        <h5 class="mb-0">What You'll Learn</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <?php 
+                                            $outcomes = explode("\n", $course['learning_outcomes']);
+                                            foreach ($outcomes as $outcome): 
+                                                if (trim($outcome) !== ''):
+                                            ?>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                                    <?= esc(trim($outcome)) ?>
+                                                </li>
+                                            <?php 
+                                                endif;
+                                            endforeach; 
+                                            ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+>>>>>>> origin/recovered-master
                         </div>
                         
                         <div class="col-md-4">
@@ -94,6 +141,7 @@
                                             <span><i class="fas fa-user-graduate me-2 text-primary"></i> Level</span>
                                             <span class="badge bg-primary"><?= esc($course['level'] ?? 'Beginner') ?></span>
                                         </li>
+<<<<<<< HEAD
                                     </ul>
                                 </div>
                             </div>
@@ -162,6 +210,48 @@
                                     <?php endif; ?>
                                 </div>
                             </div>
+=======
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <span><i class="fas fa-clock me-2 text-primary"></i> Duration</span>
+                                            <span><?= esc($course['duration'] ?? 'Self-paced') ?></span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <span><i class="fas fa-tasks me-2 text-primary"></i> Modules</span>
+                                            <span><?= $course['module_count'] ?? 0 ?> modules</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <span><i class="fas fa-language me-2 text-primary"></i> Language</span>
+                                            <span>English</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <?php if (!empty($course['prerequisites'])): ?>
+                                <div class="card mb-4">
+                                    <div class="card-header bg-light">
+                                        <h5 class="mb-0">Prerequisites</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <?php 
+                                            $prerequisites = explode("\n", $course['prerequisites']);
+                                            foreach ($prerequisites as $prereq): 
+                                                if (trim($prereq) !== ''):
+                                            ?>
+                                                <li class="mb-2">
+                                                    <i class="fas fa-arrow-right text-muted me-2"></i>
+                                                    <?= esc(trim($prereq)) ?>
+                                                </li>
+                                            <?php 
+                                                endif;
+                                            endforeach; 
+                                            ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+>>>>>>> origin/recovered-master
                         </div>
                     </div>
                 </div>
@@ -170,6 +260,7 @@
     </div>
 </div>
 
+<<<<<<< HEAD
 <!-- Upload Modal -->
 <?php if ($canUploadMaterials): ?>
 <div class="modal fade" id="uploadMaterialModal" tabindex="-1">
@@ -217,6 +308,15 @@
             <div class="modal-header">
                 <h5 class="modal-title">Enroll in Course</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+=======
+<!-- Enroll Modal -->
+<div class="modal fade" id="enrollModal" tabindex="-1" aria-labelledby="enrollModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="enrollModalLabel">Enroll in Course</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+>>>>>>> origin/recovered-master
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to enroll in <strong><?= esc($course['title']) ?></strong>?</p>
@@ -234,10 +334,19 @@
 <?= $this->section('scripts') ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< HEAD
     const enrollButtons = document.querySelectorAll('.enroll-btn');
     const confirmEnrollBtn = document.getElementById('confirmEnroll');
     let currentCourseId = null;
 
+=======
+    // Enroll button click handler
+    const enrollButtons = document.querySelectorAll('.enroll-btn');
+    const confirmEnrollBtn = document.getElementById('confirmEnroll');
+    let currentCourseId = null;
+    
+    // Set up enroll buttons
+>>>>>>> origin/recovered-master
     enrollButtons.forEach(button => {
         button.addEventListener('click', function() {
             currentCourseId = this.getAttribute('data-course-id');
@@ -245,6 +354,7 @@ document.addEventListener('DOMContentLoaded', function() {
             modal.show();
         });
     });
+<<<<<<< HEAD
 
     if (confirmEnrollBtn) {
         confirmEnrollBtn.addEventListener('click', function() {
@@ -252,6 +362,22 @@ document.addEventListener('DOMContentLoaded', function() {
             this.disabled = true;
             this.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Enrolling...';
 
+=======
+    
+    // Confirm enrollment
+    if (confirmEnrollBtn) {
+        confirmEnrollBtn.addEventListener('click', function() {
+            if (!currentCourseId) return;
+            
+            const button = this;
+            const originalText = button.innerHTML;
+            
+            // Show loading state
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> Enrolling...';
+            
+            // Make AJAX request
+>>>>>>> origin/recovered-master
             fetch('<?= base_url('course/enroll') ?>', {
                 method: 'POST',
                 headers: {
@@ -264,6 +390,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+<<<<<<< HEAD
                     window.location.reload();
                 } else {
                     alert(data.message || 'Failed to enroll');
@@ -413,6 +540,51 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+=======
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('enrollModal'));
+                    modal.hide();
+                    
+                    // Show success message
+                    showAlert('Success! You have been enrolled in the course.', 'success');
+                    
+                    // Update UI
+                    window.location.reload();
+                } else {
+                    showAlert(data.message || 'Failed to enroll. Please try again.', 'danger');
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showAlert('An error occurred. Please try again.', 'danger');
+                button.innerHTML = originalText;
+                button.disabled = false;
+            });
+        });
+    }
+    
+    // Helper function to show alerts
+    function showAlert(message, type) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+        alertDiv.role = 'alert';
+        alertDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        
+        const container = document.querySelector('.container');
+        container.insertBefore(alertDiv, container.firstChild);
+        
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            const alert = bootstrap.Alert.getOrCreateInstance(alertDiv);
+            if (alert) alert.close();
+        }, 5000);
+    }
+>>>>>>> origin/recovered-master
 });
 </script>
 <?= $this->endSection() ?>

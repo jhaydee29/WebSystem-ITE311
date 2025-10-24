@@ -3,6 +3,7 @@
 <?= $this->section('content') ?>
 <div class="row">
     <div class="col-12 d-flex justify-content-between align-items-center mb-4">
+<<<<<<< HEAD
         <div>
             <h1 class="text-primary">Hey, <?= $user['name'] ?>! 👋</h1>
             <p class="text-muted mb-0">
@@ -20,6 +21,9 @@
                 ?>
             </p>
         </div>
+=======
+        <h1 class="text-primary">Dashboard</h1>
+>>>>>>> origin/recovered-master
         <div class="d-flex align-items-center gap-3">
             <!-- Role-specific navigation -->
             <?php if (session()->get('isLoggedIn')): ?>
@@ -31,12 +35,20 @@
                             <i class="fas fa-cog me-2"></i>Management
                         </button>
                         <ul class="dropdown-menu">
+<<<<<<< HEAD
                             <li><a class="dropdown-item" href="<?= site_url('/admin/users') ?>"><i class="fas fa-users me-2"></i>User Management</a></li>
                             <li><a class="dropdown-item" href="<?= site_url('/courses') ?>"><i class="fas fa-book me-2"></i>Course Management</a></li>
                             <li><a class="dropdown-item" href="<?= site_url('/announcements') ?>"><i class="fas fa-bullhorn me-2"></i>Announcements</a></li>
                             <li><a class="dropdown-item" href="<?= site_url('/admin/reports') ?>"><i class="fas fa-chart-bar me-2"></i>Reports</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="<?= site_url('/admin/settings') ?>"><i class="fas fa-wrench me-2"></i>System Settings</a></li>
+=======
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-users me-2"></i>User Management</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-book me-2"></i>Course Management</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-chart-bar me-2"></i>Reports</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-wrench me-2"></i>System Settings</a></li>
+>>>>>>> origin/recovered-master
                         </ul>
                     </div>
 
@@ -46,8 +58,12 @@
                             <i class="fas fa-chalkboard-teacher me-2"></i>Teaching
                         </button>
                         <ul class="dropdown-menu">
+<<<<<<< HEAD
                             <li><a class="dropdown-item" href="<?= site_url('/courses') ?>"><i class="fas fa-book me-2"></i>My Courses</a></li>
                             <li><a class="dropdown-item" href="<?= site_url('/announcements') ?>"><i class="fas fa-bullhorn me-2"></i>Announcements</a></li>
+=======
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-book me-2"></i>My Courses</a></li>
+>>>>>>> origin/recovered-master
                             <li><a class="dropdown-item" href="#"><i class="fas fa-graduation-cap me-2"></i>Gradebook</a></li>
                             <li><a class="dropdown-item" href="#"><i class="fas fa-tasks me-2"></i>Assignments</a></li>
                             <li><hr class="dropdown-divider"></li>
@@ -162,7 +178,11 @@
         <div class="col-md-6">
             <div class="card mb-3">
                 <div class="card-body">
+<<<<<<< HEAD
                     <h5 class="card-title">Your Progress</h5>
+=======
+                    <h5 class="card-title">My Learning Progress</h5>
+>>>>>>> origin/recovered-master
                     <div class="row text-center">
                         <div class="col-6">
                             <h4 class="text-primary"><?= $stats['enrolled_courses'] ?></h4>
@@ -193,7 +213,11 @@
             <div class="card">
                 <div class="card-header bg-success text-white">
                     <h5 class="card-title mb-0">
+<<<<<<< HEAD
                         <i class="fas fa-graduation-cap me-2"></i>Your Courses
+=======
+                        <i class="fas fa-graduation-cap me-2"></i>My Enrolled Courses
+>>>>>>> origin/recovered-master
                     </h5>
                 </div>
                 <div class="card-body">
@@ -222,8 +246,13 @@
                     <?php else: ?>
                         <div class="text-center py-4">
                             <i class="fas fa-info-circle text-muted fa-3x mb-3"></i>
+<<<<<<< HEAD
                             <h5 class="text-muted">No courses yet</h5>
                             <p class="text-muted">Time to get started! Check out the available courses below and pick something interesting.</p>
+=======
+                            <h5 class="text-muted">No Enrolled Courses</h5>
+                            <p class="text-muted">You haven't enrolled in any courses yet. Browse available courses below to get started!</p>
+>>>>>>> origin/recovered-master
                         </div>
                     <?php endif; ?>
                 </div>
@@ -235,7 +264,11 @@
             <div class="card">
                 <div class="card-header bg-primary text-white">
                     <h5 class="card-title mb-0">
+<<<<<<< HEAD
                         <i class="fas fa-plus-circle me-2"></i>Browse Courses
+=======
+                        <i class="fas fa-plus-circle me-2"></i>Available Courses
+>>>>>>> origin/recovered-master
                     </h5>
                 </div>
                 <div class="card-body">
@@ -271,8 +304,13 @@
                     <?php else: ?>
                         <div class="text-center py-4">
                             <i class="fas fa-trophy text-success fa-3x mb-3"></i>
+<<<<<<< HEAD
                             <h5 class="text-success">You're all set!</h5>
                             <p class="text-muted">Nice! You've enrolled in everything. Focus on learning now!</p>
+=======
+                            <h5 class="text-success">All Courses Enrolled!</h5>
+                            <p class="text-muted">Congratulations! You're enrolled in all available courses.</p>
+>>>>>>> origin/recovered-master
                         </div>
                     <?php endif; ?>
                 </div>
@@ -282,6 +320,7 @@
         <div class="col-md-6">
             <div class="card mb-3">
                 <div class="card-body">
+<<<<<<< HEAD
                     <h5 class="card-title">What's Happening</h5>
                     <div class="activity-list">
                         <div class="activity-item mb-2">
@@ -299,6 +338,25 @@
                         <div class="activity-item mb-2">
                             <i class="fas fa-calendar-check text-success me-2"></i>
                             <small>Don't forget to check announcements regularly</small>
+=======
+                    <h5 class="card-title">Recent Activity</h5>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            <small>Completed Assignment: Database Design</small>
+                        </div>
+                        <div class="activity-item">
+                            <i class="fas fa-play-circle text-info me-2"></i>
+                            <small>Started Course: Web Development</small>
+                        </div>
+                        <div class="activity-item">
+                            <i class="fas fa-clipboard-check text-primary me-2"></i>
+                            <small>Quiz Submitted: PHP Fundamentals</small>
+                        </div>
+                        <div class="activity-item">
+                            <i class="fas fa-comments text-secondary me-2"></i>
+                            <small>Joined Discussion: MVC Architecture</small>
+>>>>>>> origin/recovered-master
                         </div>
                     </div>
                 </div>

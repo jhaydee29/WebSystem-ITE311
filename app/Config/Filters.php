@@ -34,7 +34,10 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+<<<<<<< HEAD
         'roleauth'      => \App\Filters\RoleAuth::class,
+=======
+>>>>>>> origin/recovered-master
     ];
 
     /**

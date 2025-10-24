@@ -14,10 +14,18 @@
             <?php foreach ($courses as $course): ?>
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 shadow-sm">
+<<<<<<< HEAD
                         <div class="card-body d-flex flex-column">
                             <div class="mb-3">
                                 <h5 class="card-title text-primary">
                                     <a href="<?= base_url('course/view/' . $course['id']) ?>" class="text-decoration-none text-primary">
+=======
+<<<<<<< HEAD
+                        <div class="card-body d-flex flex-column">
+                            <div class="mb-3">
+                                <h5 class="card-title text-primary">
+                                    <a href="<?= base_url('course/' . $course['id']) ?>" class="text-decoration-none text-primary">
+>>>>>>> origin/recovered-master
                                         <?php echo htmlspecialchars($course['title']); ?>
                                     </a>
                                 </h5>
@@ -61,6 +69,7 @@
                                 </div>
 
                                 <div class="d-grid gap-2">
+<<<<<<< HEAD
                                     <a href="<?= base_url('course/view/' . $course['id']) ?>" class="btn btn-outline-primary btn-sm">
                                         <i class="fas fa-info-circle me-1"></i>View Details
                                     </a>
@@ -78,6 +87,48 @@
                                         <?php endif; ?>
                                     <?php endif; ?>
                                 </div>
+=======
+                                    <a href="<?= base_url('course/' . $course['id']) ?>" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-info-circle me-1"></i>View Details
+                                    </a>
+                                    
+                                    <?php if (!in_array($course['id'], $enrolledCourseIds)): ?>
+                                        <button class="btn btn-primary btn-sm enroll-btn"
+                                                data-course-id="<?php echo $course['id']; ?>">
+                                            <i class="fas fa-plus me-1"></i>Enroll Now
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+=======
+                        <div class="card-body">
+                            <h5 class="card-title text-primary"><?php echo htmlspecialchars($course['title']); ?></h5>
+                            <p class="card-text text-muted"><?php echo htmlspecialchars($course['description']); ?></p>
+
+                            <?php if (isset($course['instructor_name'])): ?>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        <i class="fas fa-chalkboard-teacher me-1"></i>Instructor: <?php echo htmlspecialchars($course['instructor_name']); ?>
+                                    </small>
+                                </p>
+                            <?php endif; ?>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="badge bg-info">
+                                    <i class="fas fa-users me-1"></i><?php echo $course['enrollment_count']; ?> enrolled
+                                </span>
+
+                                <?php if (in_array($course['id'], $enrolledCourseIds)): ?>
+                                    <button class="btn btn-success btn-sm" disabled>
+                                        <i class="fas fa-check me-1"></i>Enrolled
+                                    </button>
+                                <?php else: ?>
+                                    <button class="btn btn-primary btn-sm enroll-btn"
+                                            data-course-id="<?php echo $course['id']; ?>">
+                                        <i class="fas fa-plus me-1"></i>Enroll
+                                    </button>
+                                <?php endif; ?>
+>>>>>>> 4ea0f464c41604ac8b9ef56ccd448fdc7b56931e
+>>>>>>> origin/recovered-master
                             </div>
                         </div>
                     </div>

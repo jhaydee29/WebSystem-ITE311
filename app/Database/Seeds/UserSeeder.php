@@ -10,6 +10,7 @@ class UserSeeder extends Seeder
     {
         $data = [
             [
+<<<<<<< HEAD
                 'name'       => 'Admin User',
                 'email'      => 'admin@example.com',
                 'password'   => password_hash('admin123', PASSWORD_DEFAULT),
@@ -32,6 +33,24 @@ class UserSeeder extends Seeder
                 'role'       => 'teacher',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
+=======
+                'name'     => 'Admin User',
+                'email'    => 'admin@example.com',
+                'password' => password_hash('admin123', PASSWORD_DEFAULT),
+                'role'     => 'admin',
+            ],
+            [
+                'name'     => 'Renz Student',
+                'email'    => 'student@example.com',
+                'password' => password_hash('student123', PASSWORD_DEFAULT),
+                'role'     => 'student',
+            ],
+            [
+                'name'     => 'Al-Muhyi Instructor',
+                'email'    => 'instructor@example.com',
+                'password' => password_hash('instructor123', PASSWORD_DEFAULT),
+                'role'     => 'instructor',
+>>>>>>> origin/recovered-master
             ],
         ];
 

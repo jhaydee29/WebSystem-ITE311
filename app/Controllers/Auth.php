@@ -75,6 +75,7 @@ class Auth extends BaseController
             } else {
                 // Validation passed - now check database
                 $db = \Config\Database::connect();
+<<<<<<< HEAD
                 $email = $this->request->getPost('email');
                 $password = $this->request->getPost('password');
                 
@@ -82,6 +83,12 @@ class Auth extends BaseController
 
                 if ($user) {
                     if (password_verify($password, $user['password'])) {
+=======
+                $user = $db->table('users')->where('email', $this->request->getPost('email'))->get()->getRowArray();
+
+                if ($user) {
+                    if (password_verify($this->request->getPost('password'), $user['password'])) {
+>>>>>>> origin/recovered-master
                         // Store user data including role in session
                         $sessionData = [
                             'id'        => $user['id'],
@@ -93,6 +100,10 @@ class Auth extends BaseController
 
                         session()->set($sessionData);
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/recovered-master
                         // Redirect based on user role
                         switch ($user['role']) {
                             case 'admin':
@@ -103,6 +114,13 @@ class Auth extends BaseController
                             default:
                                 return redirect()->to('/announcements');
                         }
+<<<<<<< HEAD
+=======
+=======
+                        // Redirect all users to unified dashboard
+                        return redirect()->to('/dashboard');
+>>>>>>> 4ea0f464c41604ac8b9ef56ccd448fdc7b56931e
+>>>>>>> origin/recovered-master
                     } else {
                         session()->setFlashdata('error', 'Wrong password.');
                         return redirect()->to('/login');

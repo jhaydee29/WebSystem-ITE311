@@ -1,0 +1,31 @@
+# Environment files
+.env
+
+# Composer
+/vendor/
+composer.lock
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Logs and temporary files
+writable/logs/*
+writable/debugbar/*
+writable/session/*
+writable/cache/*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
